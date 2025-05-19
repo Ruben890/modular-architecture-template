@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mpdules.User.Infrastrutucture;
+using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
+using Shareds.Core.Logging;
 
 namespace Mpdules.User
 {
@@ -9,15 +12,20 @@ namespace Mpdules.User
     {
         public static void AddUserModule(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("StringConnection");
+            var connectionString = configuration.GetConnectionString("StringConnection")
+                                   ?? throw new NullReferenceException("The connection string 'StringConnection' was not found in the configuration file.");
 
             services.AddDbContext<UserContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString("connectionString"));
+                options.UseNpgsql(connectionString);
+                var postgresConnectionFactory = new PostgresConnectionFactory(connectionString);
+                postgresConnectionFactory.Create();
+                postgresConnectionFactory.CreateCommand();
+                options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
-
+            ModuleLoggerFactory.GetLogger("User");
         }
-    }
 
+    }
 }

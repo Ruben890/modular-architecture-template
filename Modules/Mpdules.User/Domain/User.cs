@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Mpdules.User.Infrastrutucture
+namespace Mpdules.User.Domain
 {
     public class User
     {
@@ -29,6 +30,12 @@ namespace Mpdules.User.Infrastrutucture
         public string? RefreshToken { get; set; } = null;
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        [Required]
+        public int? RoleId { get; set; }
+
+        [ForeignKey(nameof(RoleId))]
+        public Role Role { get; set; } = null!;
 
     }
 }

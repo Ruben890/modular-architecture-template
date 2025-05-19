@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Mpdules.User.Domain;
 
 namespace Mpdules.User.Infrastrutucture
 {
-    internal class UserContext
+    public class UserContext : DbContext
     {
+        public UserContext(DbContextOptions<UserContext> options)
+            : base(options) { }
+
+        public DbSet<Domain.User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("User");
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
