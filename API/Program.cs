@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Modular_Architecture_Template.Extencions;
 using Modular_Architecture_Template.Extensions;
-using Wolverine;
 
 var basePath = AppContext.BaseDirectory;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogHost(builder.Configuration);
-builder.Host.UseWolverine();
 
 builder.Configuration
     .SetBasePath(basePath)

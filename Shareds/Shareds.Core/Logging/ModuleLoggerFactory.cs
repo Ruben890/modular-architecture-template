@@ -9,7 +9,7 @@ namespace Shareds.Core.Logging
     {
         private static readonly IModuleLoggingStrategy _strategy = new FilePerModuleLoggingStrategy();
 
-       public static ILoggerManager CreateLoggerManager(string moduleName)
+        public static ILoggerManager CreateLoggerManager(string moduleName)
         {
             // Configura Serilog con la estrategia por módulo
             var serilogLogger = _strategy.CreateLogger(moduleName);
@@ -26,4 +26,4 @@ namespace Shareds.Core.Logging
         }
     }
 }
-   
+

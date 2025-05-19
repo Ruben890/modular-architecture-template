@@ -25,7 +25,6 @@ namespace Mpdules.User
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
-            // Registrar el LoggerManager específico para el módulo User
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));
         }
