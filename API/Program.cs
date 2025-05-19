@@ -1,10 +1,16 @@
+using JasperFx.Core;
 using Microsoft.AspNetCore.HttpOverrides;
 using Modular_Architecture_Template.Extencions;
 using Modular_Architecture_Template.Extensions;
+using Wolverine;
+using Wolverine.ErrorHandling;
+using Wolverine.Postgresql;
+
 
 var basePath = AppContext.BaseDirectory;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogHost(builder.Configuration);
+
 
 builder.Configuration
     .SetBasePath(basePath)
@@ -12,6 +18,16 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
+var connectionString = builder.Configuration.GetConnectionString("StringConnection")
+                       ?? throw new NullReferenceException("The connection string 'StringConnection' was not found.");
+
+builder.Host.UseWolverine(opts =>
+{
+    opts.PersistMessagesWithPostgresql(connectionString);
+    opts.Policies.UseDurableInboxOnAllListeners(); 
+    opts.OnException<TimeoutException>()
+        .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
+});
 
 builder.Services.RegisterModules(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
