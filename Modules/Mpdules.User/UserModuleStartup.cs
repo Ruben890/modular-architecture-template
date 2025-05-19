@@ -26,8 +26,8 @@ namespace Mpdules.User
             });
 
             // Registrar el LoggerManager específico para el módulo User
-            services.AddSingleton<ILoggerManager>(provider =>
-                ModuleLoggerFactory.GetLoggerManager("User"));
+            services.AddScoped<ILoggerManager>(provider =>
+                ModuleLoggerFactory.CreateLoggerManager("User"));
         }
     }
 }

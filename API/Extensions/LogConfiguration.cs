@@ -2,26 +2,12 @@
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
-using Shareds.Core.Interfaces;
-using Shareds.Core.Logging;
 
 namespace Modular_Architecture_Template.Extensions
 {
     public static class LogConfiguration
     {
         private const string TextOutputTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {NewLine}{Exception}";
-
-        public static void ConfigureLoggerService(this IServiceCollection services)
-        {
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.AddSerilog(dispose: true);
-            });
-
-            services.AddSingleton<ILoggerManager, LoggerManager>(provider =>
-                new LoggerManager(provider.GetRequiredService<ILogger<LoggerManager>>()));
-        }
 
         public static void ConfigureLogHost(this IHostBuilder host, IConfiguration configuration)
         {

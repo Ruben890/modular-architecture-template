@@ -16,7 +16,7 @@ namespace Mpdules.User.Presentation.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            _logger.LogInfo("holas funciona ");
+            _logger.LogInfo("holas funciona ", new {nombre = "darlin" });
             return Ok(new[] { "User1", "User2" });
         }
     }

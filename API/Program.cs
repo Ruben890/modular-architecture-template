@@ -16,7 +16,6 @@ builder.Configuration
 
 
 builder.Services.RegisterModules(builder.Configuration);
-builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.AddAuthentication();
 builder.Services.AddConfiguredControllers();
