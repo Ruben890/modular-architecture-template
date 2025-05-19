@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Presentation\" />
+    <Folder Include="Presentation\Mappers\" />
   </ItemGroup>
 
   <ItemGroup>

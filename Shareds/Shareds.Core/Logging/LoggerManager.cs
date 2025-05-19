@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Shareds.Core.Interfaces;
-using System;
 
 namespace Shareds.Core.Logging
 {

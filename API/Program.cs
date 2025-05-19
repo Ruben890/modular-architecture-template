@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Modular_Architecture_Template.Extencions;
 using Modular_Architecture_Template.Extensions;
+using Newtonsoft.Json.Serialization;
 using Wolverine;
 
 var basePath = AppContext.BaseDirectory;
@@ -18,8 +19,22 @@ builder.Host.UseWolverine();
 builder.Services.RegisterModules(builder.Configuration);
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureCors(builder.Configuration);
-builder.Services.AddControllers();
 builder.Services.AddAuthentication();
+
+
+
+builder.Services.AddControllers(config =>
+    {
+        config.RespectBrowserAcceptHeader = true;
+        config.ReturnHttpNotAcceptable = true;
+    })
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
 
 var app = builder.Build();
 
