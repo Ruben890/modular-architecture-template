@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "Modular Architecture Template\API.csproj", "{F27E5425-5C14-4076-931C-9774CDCA0504}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shareds", "Shareds", "{ED1B1F33-113F-44E6-B378-1A48E99F6DAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F27E5425-5C14-4076-931C-9774CDCA0504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27E5425-5C14-4076-931C-9774CDCA0504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27E5425-5C14-4076-931C-9774CDCA0504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27E5425-5C14-4076-931C-9774CDCA0504}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03676625-47D8-4463-BBA5-AF5962DCF956}
+	EndGlobalSection
+EndGlobal
