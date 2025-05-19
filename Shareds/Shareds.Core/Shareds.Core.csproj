@@ -18,4 +18,8 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shared.DTO\Shared.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

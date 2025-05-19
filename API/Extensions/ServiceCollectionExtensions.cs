@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using Microsoft.Extensions.Options;
+using Modular_Architecture_Template.Filters;
+using Newtonsoft.Json.Serialization;
 using Shareds.Core;
 
 namespace Modular_Architecture_Template.Extensions
@@ -34,6 +36,7 @@ namespace Modular_Architecture_Template.Extensions
         {
             services.AddControllers(config =>
                 {
+                    config.Filters.Add<StandardResponseFilter>();
                     config.RespectBrowserAcceptHeader = true;
                     config.ReturnHttpNotAcceptable = true;
                 })

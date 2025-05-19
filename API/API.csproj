@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -16,12 +17,12 @@
     <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="WolverineFx" Version="3.13.3" />
     <PackageReference Include="WolverineFx.Postgresql" Version="3.13.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Mpdules.User\Mpdules.User.csproj" />
+    <ProjectReference Include="..\Shareds\Shared.DTO\Shared.DTO.csproj" />
   </ItemGroup>
 
 </Project>

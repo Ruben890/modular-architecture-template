@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mapster;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ namespace Mpdules.User
                 postgresConnectionFactory.CreateCommand();
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
+
+            services.AddMapster();
 
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));
