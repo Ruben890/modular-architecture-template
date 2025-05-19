@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Modular_Architecture_Template.Extencions;
 using Modular_Architecture_Template.Extensions;
-using Newtonsoft.Json.Serialization;
-using Shareds.Core;
 using Wolverine;
 
 var basePath = AppContext.BaseDirectory;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogHost(builder.Configuration);
-
+builder.Host.UseWolverine();
 
 builder.Configuration
     .SetBasePath(basePath)
@@ -16,7 +14,7 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-builder.Host.UseWolverine();
+
 builder.Services.RegisterModules(builder.Configuration);
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureCors(builder.Configuration);
