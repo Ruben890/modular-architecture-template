@@ -1,4 +1,7 @@
-﻿namespace Modular_Architecture_Template.Extensions
+﻿using Newtonsoft.Json.Serialization;
+using Shareds.Core;
+
+namespace Modular_Architecture_Template.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -26,5 +29,25 @@
                 });
             });
         }
+
+        public static void AddConfiguredControllers(this IServiceCollection services)
+        {
+            services.AddControllers(config =>
+                {
+                    config.RespectBrowserAcceptHeader = true;
+                    config.ReturnHttpNotAcceptable = true;
+                })
+                .ConfigureApplicationPartManager(manager =>
+                {
+                    manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                });
+        }
     }
 }
+

@@ -1,6 +1,15 @@
-﻿namespace Mpdules.User.Presentation.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Mpdules.User.Presentation.Controllers
 {
-    public class UserControllers
+    [ApiController]
+    [Route("api/Users")]
+    internal class UserController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            return Ok(new[] { "User1", "User2" });
+        }
     }
 }

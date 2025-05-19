@@ -25,8 +25,6 @@ namespace Mpdules.User
             });
 
             ModuleLoggerFactory.GetLogger("User");
-
         }
-
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace Shareds.Core
 {
