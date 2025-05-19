@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mpdules.User.Infrastrutucture;
 using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
+using Shareds.Core.Interfaces;
 using Shareds.Core.Logging;
 
 namespace Mpdules.User
@@ -13,7 +14,7 @@ namespace Mpdules.User
         public static void AddUserModule(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("StringConnection")
-                                   ?? throw new NullReferenceException("The connection string 'StringConnection' was not found in the configuration file.");
+                                   ?? throw new NullReferenceException("The connection string 'StringConnection' was not found.");
 
             services.AddDbContext<UserContext>(options =>
             {
@@ -24,7 +25,9 @@ namespace Mpdules.User
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
-            ModuleLoggerFactory.GetLogger("User");
+            // Registrar el LoggerManager específico para el módulo User
+            services.AddSingleton<ILoggerManager>(provider =>
+                ModuleLoggerFactory.GetLoggerManager("User"));
         }
     }
 }
