@@ -26,7 +26,6 @@ namespace Mpdules.User
 
             ModuleLoggerFactory.GetLogger("User");
 
-            var assembly = typeof(UserModuleStartup).Assembly;
         }
 
     }
