@@ -11,7 +11,7 @@ namespace Shared.Core.Logging.Strategies
             Directory.CreateDirectory(logDirectory);
 
             // Configuración de Serilog
-            return new LoggerConfiguration()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.WithProperty("Module", moduleName)
                 .WriteTo.Console(
@@ -25,6 +25,11 @@ namespace Shared.Core.Logging.Strategies
                     shared: true
                 )
                 .CreateLogger();
+
+            // Mensaje informativo del módulo que se está iniciando
+            logger.Information("Starting module '{Module}'", moduleName);
+
+            return logger;
         }
     }
 }

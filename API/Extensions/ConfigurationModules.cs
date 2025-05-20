@@ -1,4 +1,5 @@
-﻿using Mpdules.User;
+﻿using Module.Auth;
+using Module.User;
 
 namespace API.Extensions
 {
@@ -8,6 +9,7 @@ namespace API.Extensions
         public static void RegisterModules(this IServiceCollection services, IConfiguration config)
         {
             services.AddUserModule(config);
+            services.AddAuthModule(config);
 
         }
 

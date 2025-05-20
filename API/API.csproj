@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -21,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Modules\Mpdules.User\Mpdules.User.csproj" />
+    <ProjectReference Include="..\Modules\Module.Auth\Module.Auth.csproj" />
+    <ProjectReference Include="..\Modules\Module.User\Module.User.csproj" />
   </ItemGroup>
 
 </Project>
