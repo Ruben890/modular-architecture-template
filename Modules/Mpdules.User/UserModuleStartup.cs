@@ -8,6 +8,7 @@ using Mpdules.User.Presentation.Mappers;
 using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
 using Shareds.Core.Interfaces;
 using Shareds.Core.Logging;
+using Wolverine;
 
 namespace Mpdules.User
 {
@@ -29,6 +30,11 @@ namespace Mpdules.User
 
             // Configuración de Mapster específica del módulo User
             TypeAdapterConfig.GlobalSettings.RegisterUserMappings();
+
+            services.AddWolverine(opt =>
+            {
+
+            });
 
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));
