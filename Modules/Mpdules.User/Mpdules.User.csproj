@@ -20,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Queries\" />
+    <Folder Include="Application\Handlers\Commands\" />
+    <Folder Include="Application\Handlers\" />
+    <Folder Include="Application\Handlers\Queries\" />
+    <Folder Include="Application\Services\" />
   </ItemGroup>
 
 </Project>

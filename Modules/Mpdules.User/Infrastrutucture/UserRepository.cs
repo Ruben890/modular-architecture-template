@@ -11,6 +11,8 @@ namespace Mpdules.User.Infrastrutucture
             _context = context;
         }
 
-
+        public void AddUser(Domain.User user) => Create(user);
+        public void DeleteUser(Domain.User user) => Delete(user);
+        public void UpdateUser(Domain.User user) => Update(user);
     }
 }

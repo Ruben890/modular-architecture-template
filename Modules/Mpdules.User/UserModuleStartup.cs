@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mpdules.User.Domain.Interfaces;
 using Mpdules.User.Infrastrutucture;
 using Mpdules.User.Presentation.Mappers;
 using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
 using Shareds.Core.Interfaces;
 using Shareds.Core.Logging;
-using Wolverine;
 
 namespace Mpdules.User
 {
@@ -28,13 +28,9 @@ namespace Mpdules.User
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
-            // Configuración de Mapster específica del módulo User
             TypeAdapterConfig.GlobalSettings.RegisterUserMappings();
 
-            services.AddWolverine(opt =>
-            {
-
-            });
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));
