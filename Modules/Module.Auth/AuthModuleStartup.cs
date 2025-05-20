@@ -10,7 +10,7 @@ namespace Module.Auth
     {
         public static void AddAuthModule(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ILoggerManager>(provider =>
+            services.AddSingleton<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("Auth"));
         }
     }

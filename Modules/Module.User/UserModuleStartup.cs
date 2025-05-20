@@ -35,7 +35,7 @@ namespace Module.User
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserServices, UserServices>();
 
-            services.AddScoped<ILoggerManager>(provider =>
+            services.AddSingleton<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));
         }
     }

@@ -10,8 +10,13 @@ namespace Module.User.Application.Services
         private readonly IUserRepository  _userRepository;
 
 
+        public UserServices(ILoggerManager logger, IUserRepository userRepository)
+        {
+            _logger = logger;
+            _userRepository = userRepository;
+        }
 
-
+        
 
     }
 }

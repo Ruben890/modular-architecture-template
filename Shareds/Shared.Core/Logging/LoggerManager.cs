@@ -5,7 +5,7 @@ namespace Shared.Core.Logging
 {
     public class LoggerManager : ILoggerManager
     {
-        private static ILogger<LoggerManager> _logger;
+        private readonly ILogger<LoggerManager> _logger;
 
         // Constructor to initialize the logger
         public LoggerManager(ILogger<LoggerManager> logger)
