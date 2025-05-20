@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Core.DatabaseRetryPolicies.PosgretSQL;
 
 namespace Module.Auth
 {
