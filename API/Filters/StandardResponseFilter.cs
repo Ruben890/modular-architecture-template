@@ -42,11 +42,13 @@ public class StandardResponseFilter : IActionFilter
 
             // Si el servicio no devolvió ApiResponse (caso raro), se envuelve
             var statusCode = objectResult.StatusCode ?? (int)HttpStatusCode.OK;
+            var isString = objectResult.Value is string;
+
             var wrapped = new ApiResponse
             {
                 StatusCode = (HttpStatusCode)statusCode,
-                Details = objectResult.Value,
-                Message = "Operation completed successfully."
+                Message = isString ? objectResult.Value?.ToString() : "Operation completed successfully.",
+                Details = isString ? null : objectResult.Value
             };
 
             context.Result = new ObjectResult(wrapped)

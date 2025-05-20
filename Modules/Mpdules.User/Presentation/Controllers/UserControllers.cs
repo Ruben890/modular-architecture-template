@@ -9,7 +9,7 @@ namespace Mpdules.User.Presentation.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            return Ok(new[] { "User1", "User2" });
+            return NotFound("no hay ususarios ");
         }
     }
 }
