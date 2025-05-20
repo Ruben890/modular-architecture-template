@@ -1,5 +1,9 @@
 ﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using System.Text;
 
 namespace API.Extensions
 {
@@ -30,6 +34,28 @@ namespace API.Extensions
             });
         }
 
+        public static void ConfigureAuthJWT(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+             {
+                 options.IncludeErrorDetails = true;
+                 options.RequireHttpsMetadata = true;
+                 options.SaveToken = true;
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ClockSkew = TimeSpan.Zero,
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = config.GetRequiredSection("Jwt").GetRequiredSection("Issuer").Value,
+                     ValidAudience = config.GetRequiredSection("Jwt").GetRequiredSection("Audience").Value,
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
+                 };
+             });
+        }
+
         public static void AddConfiguredControllers(this IServiceCollection services)
         {
             services.AddControllers(config =>
@@ -49,6 +75,20 @@ namespace API.Extensions
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 });
         }
+
+        public static void AddGlobalCookiePolicy(this IServiceCollection services, IHostEnvironment environment)
+        {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.HttpOnly = HttpOnlyPolicy.Always;
+                options.Secure = CookieSecurePolicy.Always;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+
+            });
+
+        }
+
     }
 }
+
 

@@ -30,6 +30,8 @@ builder.Host.UseWolverine(opts =>
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
 });
 builder.Services.ConfigureLoggerService();
+builder.Services.ConfigureAuthJWT(builder.Configuration);
+builder.Services.AddGlobalCookiePolicy(builder.Environment);
 builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
 builder.Services.RegisterModules(builder.Configuration);
