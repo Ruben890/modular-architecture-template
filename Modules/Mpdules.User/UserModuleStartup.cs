@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mpdules.User.Infrastrutucture;
+using Mpdules.User.Presentation.Mappers;
 using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
 using Shareds.Core.Interfaces;
 using Shareds.Core.Logging;
@@ -26,7 +27,8 @@ namespace Mpdules.User
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
-            services.AddMapster();
+            // Configuración de Mapster específica del módulo User
+            TypeAdapterConfig.GlobalSettings.RegisterUserMappings();
 
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));

@@ -1,4 +1,6 @@
-using JasperFx.Core;
+﻿using JasperFx.Core;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.HttpOverrides;
 using Modular_Architecture_Template.Extencions;
 using Modular_Architecture_Template.Extensions;
@@ -29,6 +31,8 @@ builder.Host.UseWolverine(opts =>
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
 });
 
+builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+builder.Services.AddScoped<IMapper, ServiceMapper>();
 builder.Services.RegisterModules(builder.Configuration);
 builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.AddAuthentication();
