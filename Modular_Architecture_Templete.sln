@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Core", "Shareds\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.User", "Modules\Modules.User\Modules.User.csproj", "{C48EB920-54CE-CC5F-B9B9-07C35A8E10D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.Auth", "Modules\Module.Auth\Module.Auth.csproj", "{83EFC921-8274-4FCA-8034-3120EDB8AE2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{C48EB920-54CE-CC5F-B9B9-07C35A8E10D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C48EB920-54CE-CC5F-B9B9-07C35A8E10D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C48EB920-54CE-CC5F-B9B9-07C35A8E10D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83EFC921-8274-4FCA-8034-3120EDB8AE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EFC921-8274-4FCA-8034-3120EDB8AE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EFC921-8274-4FCA-8034-3120EDB8AE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EFC921-8274-4FCA-8034-3120EDB8AE2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{954E01DA-1656-44DB-B139-1E72D971F037} = {ED1B1F33-113F-44E6-B378-1A48E99F6DAA}
 		{5D3D4FF5-899E-0A87-F12F-85DCE0852DE1} = {ED1B1F33-113F-44E6-B378-1A48E99F6DAA}
 		{C48EB920-54CE-CC5F-B9B9-07C35A8E10D7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{83EFC921-8274-4FCA-8034-3120EDB8AE2D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03676625-47D8-4463-BBA5-AF5962DCF956}
