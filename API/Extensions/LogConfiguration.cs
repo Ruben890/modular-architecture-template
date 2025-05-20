@@ -2,6 +2,8 @@
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
+using Shared.Core.Interfaces;
+using Shared.Core.Logging;
 
 namespace API.Extensions
 {
@@ -9,12 +11,27 @@ namespace API.Extensions
     {
         private const string TextOutputTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {NewLine}{Exception}";
 
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            // Registro del logger con manejo apropiado de ciclo de vida
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog(dispose: true);
+            });
+
+            services.AddSingleton<ILoggerManager, LoggerManager>(provider =>
+                new LoggerManager(provider.GetRequiredService<ILogger<LoggerManager>>()));
+        }
+
+
         public static void ConfigureLogHost(this IHostBuilder host, IConfiguration configuration)
         {
             host.UseSerilog((context, services, config) =>
             {
                 var environment = context.HostingEnvironment;
-                var logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "Main");
+                var logPath = Path.Combine(AppContext.BaseDirectory, "Logs");
                 Directory.CreateDirectory(logPath);
 
                 config.MinimumLevel.Debug()

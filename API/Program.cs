@@ -29,7 +29,7 @@ builder.Host.UseWolverine(opts =>
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
 });
-
+builder.Services.ConfigureLoggerService();
 builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
 builder.Services.RegisterModules(builder.Configuration);

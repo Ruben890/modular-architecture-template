@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Core.Interfaces;
-using Shared.Core.Logging;
-
+using Shared.Core.DatabaseRetryPolicies.PosgretSQL;
 
 namespace Module.Auth
 {
@@ -10,8 +8,8 @@ namespace Module.Auth
     {
         public static void AddAuthModule(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<ILoggerManager>(provider =>
-                ModuleLoggerFactory.CreateLoggerManager("Auth"));
+      
+           
         }
     }
 }
