@@ -1,8 +1,7 @@
 ﻿
 using Newtonsoft.Json.Serialization;
-using Shared.Core;
 
-namespace Modular_Architecture_Template.Extensions
+namespace API.Extensions
 {
     public static class ServiceCollectionExtensions
     {

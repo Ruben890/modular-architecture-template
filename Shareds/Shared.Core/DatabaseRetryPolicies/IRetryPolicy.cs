@@ -1,4 +1,4 @@
-﻿namespace Shareds.Core.DatabaseRetryPolicies
+﻿namespace Shared.Core.DatabaseRetryPolicies
 {
     public interface IRetryPolicy
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Shareds.Core
+namespace Shared.Core
 {
     public class RepositoryBase<TEntity, TContext>
         where TEntity : class

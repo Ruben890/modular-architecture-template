@@ -3,7 +3,7 @@ using Serilog.Events;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace Modular_Architecture_Template.Extensions
+namespace API.Extensions
 {
     public static class LogConfiguration
     {

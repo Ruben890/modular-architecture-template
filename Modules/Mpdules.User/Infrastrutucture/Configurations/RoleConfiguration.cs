@@ -11,10 +11,8 @@ namespace Mpdules.User.Infrastrutucture.Configurations
             builder.HasKey(r => r.Id);
             builder.ToTable(nameof(Role));
 
-            builder.HasIndex(r => r.Name); // Name es la PK
+            builder.HasIndex(r => r.Name).IsUnique(); // Name es la PK
             builder.Property(r => r.Name).HasMaxLength(100).IsRequired();
-
-
         }
     }
 }

@@ -2,7 +2,7 @@
 using Shared.DTO.Response;
 using System.Net;
 
-namespace Shareds.Core.Extesions
+namespace Shared.Core.Extesions
 {
     public static class ApiResponseExtensions
     {

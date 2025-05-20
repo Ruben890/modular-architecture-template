@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace Shared.Core
+namespace API.Extensions
 {
     internal class InternalControllerFeatureProvider : ControllerFeatureProvider
     {

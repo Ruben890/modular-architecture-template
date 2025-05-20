@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
-namespace Shareds.Core.DatabaseRetryPolicies.PosgretSQL
+namespace Shared.Core.DatabaseRetryPolicies.PosgretSQL
 {
     public class PostgresConnectionFactory
     {

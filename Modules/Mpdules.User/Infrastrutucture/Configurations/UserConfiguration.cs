@@ -17,6 +17,14 @@ namespace Mpdules.User.Infrastrutucture.Configurations
             entity.HasIndex(e => e.UserName)
                 .IsUnique();
 
+            entity.Property(e => e.Email)
+               .IsRequired()
+               .HasMaxLength(256);
+
+            entity.Property(e => e.UserName)
+                .IsRequired()
+                .HasMaxLength(60);  
+
             entity.Property(e => e.CreationDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 

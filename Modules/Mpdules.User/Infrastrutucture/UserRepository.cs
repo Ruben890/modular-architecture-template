@@ -1,5 +1,5 @@
 ﻿using Mpdules.User.Domain.Interfaces.IRepository;
-using Shareds.Core;
+using Shared.Core;
 
 namespace Mpdules.User.Infrastrutucture
 {

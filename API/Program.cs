@@ -1,9 +1,8 @@
-﻿using JasperFx.Core;
+﻿using API.Extensions;
+using JasperFx.Core;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.HttpOverrides;
-using Modular_Architecture_Template.Extencions;
-using Modular_Architecture_Template.Extensions;
 using Wolverine;
 using Wolverine.ErrorHandling;
 using Wolverine.Postgresql;

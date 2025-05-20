@@ -3,58 +3,61 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Shared.DTO.Response;
 using System.Net;
 
-public class StandardResponseFilter : IActionFilter
+namespace API.Extensions
 {
-    public void OnActionExecuting(ActionExecutingContext context) { }
-
-    public void OnActionExecuted(ActionExecutedContext context)
+    public class StandardResponseFilter : IActionFilter
     {
-        // Manejo de excepción global
-        if (context.Exception != null)
+        public void OnActionExecuting(ActionExecutingContext context) { }
+
+        public void OnActionExecuted(ActionExecutedContext context)
         {
-            var errorResponse = new ApiResponse
+            // Manejo de excepción global
+            if (context.Exception != null)
             {
-                StatusCode = HttpStatusCode.InternalServerError,
-                Message = "An unexpected error occurred.",
-                Details = context.Exception.Message
-            };
-
-            context.Result = new ObjectResult(errorResponse)
-            {
-                StatusCode = (int)HttpStatusCode.InternalServerError
-            };
-
-            context.ExceptionHandled = true;
-            return;
-        }
-
-        if (context.Result is ObjectResult objectResult)
-        {
-            // Si el servicio ya devolvió ApiResponse, se respeta totalmente
-            if (objectResult.Value is ApiResponse apiResponse)
-            {
-                context.Result = new ObjectResult(apiResponse)
+                var errorResponse = new ApiResponse
                 {
-                    StatusCode = (int)apiResponse.StatusCode
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Message = "An unexpected error occurred.",
+                    Details = context.Exception.Message
                 };
+
+                context.Result = new ObjectResult(errorResponse)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+
+                context.ExceptionHandled = true;
                 return;
             }
 
-            // Si el servicio no devolvió ApiResponse (caso raro), se envuelve
-            var statusCode = objectResult.StatusCode ?? (int)HttpStatusCode.OK;
-            var isString = objectResult.Value is string;
-
-            var wrapped = new ApiResponse
+            if (context.Result is ObjectResult objectResult)
             {
-                StatusCode = (HttpStatusCode)statusCode,
-                Message = isString ? objectResult.Value?.ToString() : "Operation completed successfully.",
-                Details = isString ? null : objectResult.Value
-            };
+                // Si el servicio ya devolvió ApiResponse, se respeta totalmente
+                if (objectResult.Value is ApiResponse apiResponse)
+                {
+                    context.Result = new ObjectResult(apiResponse)
+                    {
+                        StatusCode = (int)apiResponse.StatusCode
+                    };
+                    return;
+                }
 
-            context.Result = new ObjectResult(wrapped)
-            {
-                StatusCode = statusCode
-            };
+                // Si el servicio no devolvió ApiResponse (caso raro), se envuelve
+                var statusCode = objectResult.StatusCode ?? (int)HttpStatusCode.OK;
+                var isString = objectResult.Value is string;
+
+                var wrapped = new ApiResponse
+                {
+                    StatusCode = (HttpStatusCode)statusCode,
+                    Message = isString ? objectResult.Value?.ToString() : "Operation completed successfully.",
+                    Details = isString ? null : objectResult.Value
+                };
+
+                context.Result = new ObjectResult(wrapped)
+                {
+                    StatusCode = statusCode
+                };
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Mpdules.User.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using Mpdules.User.Domain;
 using Mpdules.User.Domain.Interfaces.IRepository;
-using Shareds.Core;
+using Shared.Core;
+
 
 namespace Mpdules.User.Infrastrutucture
 {
@@ -12,6 +14,9 @@ namespace Mpdules.User.Infrastrutucture
             _contex = context;
         }
 
+        public async Task<Role?> GetRoleByName(string roleName, int Id) =>
+            await FindByCondition(x => x.Name == roleName || x.Id == Id, false)
+            .FirstOrDefaultAsync();
 
     }
 }

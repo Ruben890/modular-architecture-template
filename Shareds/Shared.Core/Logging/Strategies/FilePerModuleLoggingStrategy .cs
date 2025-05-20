@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace Shareds.Core.Logging.Strategies
+namespace Shared.Core.Logging.Strategies
 {
     public class FilePerModuleLoggingStrategy : IModuleLoggingStrategy
     {

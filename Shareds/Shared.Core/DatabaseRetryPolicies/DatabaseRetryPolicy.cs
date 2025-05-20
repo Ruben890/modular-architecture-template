@@ -4,7 +4,7 @@ using Polly.Retry;
 using System.Data.Common;
 using Serilog;
 
-namespace Shareds.Core.DatabaseRetryPolicies
+namespace Shared.Core.DatabaseRetryPolicies
 {
     public class DatabaseRetryPolicy : IRetryPolicy
     {

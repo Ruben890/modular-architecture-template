@@ -8,9 +8,9 @@ using Mpdules.User.Domain.Interfaces.IRepository;
 using Mpdules.User.Domain.Interfaces.IServices;
 using Mpdules.User.Infrastrutucture;
 using Mpdules.User.Presentation.Mappers;
-using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
-using Shareds.Core.Interfaces;
-using Shareds.Core.Logging;
+using Shared.Core.DatabaseRetryPolicies.PosgretSQL;
+using Shared.Core.Interfaces;
+using Shared.Core.Logging;
 
 namespace Mpdules.User
 {

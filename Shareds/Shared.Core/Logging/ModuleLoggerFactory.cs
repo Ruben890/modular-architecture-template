@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Serilog;
-using Shareds.Core.Interfaces;
-using Shareds.Core.Logging.Strategies;
+using Shared.Core.Interfaces;
+using Shared.Core.Logging.Strategies;
 
-namespace Shareds.Core.Logging
+namespace Shared.Core.Logging
 {
     public static class ModuleLoggerFactory
     {

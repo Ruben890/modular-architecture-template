@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Shareds.Core.Interfaces;
+using Shared.Core.Interfaces;
 
-namespace Shareds.Core.Logging
+namespace Shared.Core.Logging
 {
     public class LoggerManager : ILoggerManager
     {

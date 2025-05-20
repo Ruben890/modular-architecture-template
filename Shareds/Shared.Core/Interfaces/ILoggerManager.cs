@@ -1,4 +1,4 @@
-﻿namespace Shareds.Core.Interfaces
+﻿namespace Shared.Core.Interfaces
 {
     public interface ILoggerManager
     {

@@ -1,6 +1,6 @@
 ﻿using Mpdules.User;
 
-namespace Modular_Architecture_Template.Extencions
+namespace API.Extensions
 {
     public static class ConfigurationModules
     {

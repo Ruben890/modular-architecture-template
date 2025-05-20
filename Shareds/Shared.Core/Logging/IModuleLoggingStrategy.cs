@@ -1,6 +1,6 @@
 ﻿using ILogger = Serilog.ILogger;
 
-namespace Shareds.Core.Logging
+namespace Shared.Core.Logging
 {
     public interface IModuleLoggingStrategy
     {

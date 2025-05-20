@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.Common;
 
-namespace Shareds.Core.DatabaseRetryPolicies
+namespace Shared.Core.DatabaseRetryPolicies
 {
     public class ReliableDbCommand : DbCommand
     {
