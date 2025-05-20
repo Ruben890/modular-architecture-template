@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Mpdules.User\Mpdules.User.csproj" />
-    <ProjectReference Include="..\Shareds\Shared.DTO\Shared.DTO.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mpdules.User.Domain.Interfaces.IServices;
 
 namespace Mpdules.User.Application.Services
 {
-    internal class UserServices
+    public class UserServices : IUserServices
     {
+
+
     }
 }

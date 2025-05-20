@@ -16,14 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shareds\Shareds.Core\Shareds.Core.csproj" />
+    <ProjectReference Include="..\..\Shareds\Shareds.Core\Shared.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Handlers\Commands\" />
     <Folder Include="Application\Handlers\" />
     <Folder Include="Application\Handlers\Queries\" />
-    <Folder Include="Application\Services\" />
   </ItemGroup>
 
 </Project>

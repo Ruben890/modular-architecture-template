@@ -1,8 +1,5 @@
-﻿using Mapster;
-
-namespace Shared.DTO.Request.DTO
+﻿namespace Shared.DTO.Request.Dtos
 {
-    
     public class Requestlogin
     {
 

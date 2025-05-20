@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Mpdules.User.Domain.Interfaces;
+using Mpdules.User.Application.Services;
+using Mpdules.User.Domain.Interfaces.IRepository;
+using Mpdules.User.Domain.Interfaces.IServices;
 using Mpdules.User.Infrastrutucture;
 using Mpdules.User.Presentation.Mappers;
 using Shareds.Core.DatabaseRetryPolicies.PosgretSQL;
@@ -31,6 +33,7 @@ namespace Mpdules.User
             TypeAdapterConfig.GlobalSettings.RegisterUserMappings();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserServices, UserServices>();
 
             services.AddScoped<ILoggerManager>(provider =>
                 ModuleLoggerFactory.CreateLoggerManager("User"));

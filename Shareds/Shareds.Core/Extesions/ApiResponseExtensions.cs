@@ -1,6 +1,6 @@
-﻿using System.Net;
-using Shared.DTO.Request;
+﻿using Shared.DTO.Request;
 using Shared.DTO.Response;
+using System.Net;
 
 namespace Shareds.Core.Extesions
 {

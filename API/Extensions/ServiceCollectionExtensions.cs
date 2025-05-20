@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Options;
-using Modular_Architecture_Template.Filters;
+﻿
 using Newtonsoft.Json.Serialization;
-using Shareds.Core;
+using Shared.Core;
 
 namespace Modular_Architecture_Template.Extensions
 {

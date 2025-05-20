@@ -1,4 +1,4 @@
-﻿using Mpdules.User.Domain.Interfaces;
+﻿using Mpdules.User.Domain.Interfaces.IRepository;
 using Shareds.Core;
 
 namespace Mpdules.User.Infrastrutucture

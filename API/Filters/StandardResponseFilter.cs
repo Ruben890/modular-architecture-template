@@ -1,75 +1,58 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Net;
 using Shared.DTO.Response;
+using System.Net;
 
-namespace Modular_Architecture_Template.Filters
+public class StandardResponseFilter : IActionFilter
 {
-    public class StandardResponseFilter : IActionFilter
+    public void OnActionExecuting(ActionExecutingContext context) { }
+
+    public void OnActionExecuted(ActionExecutedContext context)
     {
-        public void OnActionExecuting(ActionExecutingContext context) { }
-
-        public void OnActionExecuted(ActionExecutedContext context)
+        // Manejo de excepción global
+        if (context.Exception != null)
         {
-            if (context.Exception != null)
+            var errorResponse = new ApiResponse
             {
-                var errorResponse = new ApiResponse
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    Message = "An unexpected error occurred.",
-                    Details = context.Exception.Message
-                };
+                StatusCode = HttpStatusCode.InternalServerError,
+                Message = "An unexpected error occurred.",
+                Details = context.Exception.Message
+            };
 
-                context.Result = new ObjectResult(errorResponse)
-                {
-                    StatusCode = (int)HttpStatusCode.InternalServerError
-                };
+            context.Result = new ObjectResult(errorResponse)
+            {
+                StatusCode = (int)HttpStatusCode.InternalServerError
+            };
 
-                context.ExceptionHandled = true;
+            context.ExceptionHandled = true;
+            return;
+        }
+
+        if (context.Result is ObjectResult objectResult)
+        {
+            // Si el servicio ya devolvió ApiResponse, se respeta totalmente
+            if (objectResult.Value is ApiResponse apiResponse)
+            {
+                context.Result = new ObjectResult(apiResponse)
+                {
+                    StatusCode = (int)apiResponse.StatusCode
+                };
                 return;
             }
 
-            switch (context.Result)
+            // Si el servicio no devolvió ApiResponse (caso raro), se envuelve
+            var statusCode = objectResult.StatusCode ?? (int)HttpStatusCode.OK;
+            var wrapped = new ApiResponse
             {
-                case ObjectResult objectResult when objectResult is not BadRequestObjectResult:
-                    var response = new ApiResponse
-                    {
-                        Details = objectResult.Value,
-                        StatusCode = (HttpStatusCode)(objectResult.StatusCode ?? 200),
-                        Message = context.ModelState.IsValid
-                            ? "Operation completed successfully."
-                            : "Validation error."
-                    };
+                StatusCode = (HttpStatusCode)statusCode,
+                Details = objectResult.Value,
+                Message = "Operation completed successfully."
+            };
 
-                    context.Result = new ObjectResult(response)
-                    {
-                        StatusCode = objectResult.StatusCode
-                    };
-                    break;
-
-                case BadRequestObjectResult badRequestResult:
-                    context.Result = new ObjectResult(new ApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = "Bad request.",
-                        Details = badRequestResult.Value
-                    })
-                    {
-                        StatusCode = (int)HttpStatusCode.BadRequest
-                    };
-                    break;
-
-                case NotFoundResult:
-                    context.Result = new ObjectResult(new ApiResponse
-                    {
-                        StatusCode = HttpStatusCode.NotFound,
-                        Message = "Resource not found."
-                    })
-                    {
-                        StatusCode = (int)HttpStatusCode.NotFound
-                    };
-                    break;
-            }
+            context.Result = new ObjectResult(wrapped)
+            {
+                StatusCode = statusCode
+            };
         }
     }
 }
