@@ -3,7 +3,7 @@
 namespace Module.Auth.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/Users")]
+    [Route("api/Auth")]
     internal class AuthController : ControllerBase
     {
 

@@ -1,5 +1,4 @@
 ﻿using Serilog;
-
 namespace Shared.Core.Logging.Strategies
 {
     public class FilePerModuleLoggingStrategy : IModuleLoggingStrategy
@@ -11,7 +10,7 @@ namespace Shared.Core.Logging.Strategies
             Directory.CreateDirectory(logDirectory);
 
             // Configuración de Serilog
-            var logger = new LoggerConfiguration()
+            return new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.WithProperty("Module", moduleName)
                 .WriteTo.Console(
@@ -25,11 +24,6 @@ namespace Shared.Core.Logging.Strategies
                     shared: true
                 )
                 .CreateLogger();
-
-            // Mensaje informativo del módulo que se está iniciando
-            logger.Information("Starting module '{Module}'", moduleName);
-
-            return logger;
         }
     }
 }
