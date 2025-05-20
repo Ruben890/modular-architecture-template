@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+using UserEntity = Mpdules.User.Domain.Entity.User;
 namespace Mpdules.User.Infrastrutucture.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<Domain.Entity.User>
+    public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entity.User> entity)
+        public void Configure(EntityTypeBuilder<UserEntity> entity)
         {
             entity.ToTable(nameof(User));
 
