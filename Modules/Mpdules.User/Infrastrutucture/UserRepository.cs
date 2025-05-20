@@ -1,4 +1,4 @@
-﻿using Mpdules.User.Domain;
+﻿using Mpdules.User.Domain.Interfaces;
 using Shareds.Core;
 
 namespace Mpdules.User.Infrastrutucture
