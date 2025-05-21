@@ -34,6 +34,7 @@ builder.Host.UseWolverine(opts =>
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureAuthJWT(builder.Configuration);
 builder.Services.AddGlobalCookiePolicy(builder.Environment);
+builder.Services.ConfigureApiVersioning(builder.Configuration);
 builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
 builder.Services.RegisterModules(builder.Configuration);
