@@ -16,7 +16,7 @@ namespace Module.User.Application.Handlers.Queries
             _userRepository = userRepository;
         }
 
-        public Task<UserDto?> Handle(GetUserByEmailOrUserNameHandler query, CancellationToken ct)
+        public Task<UserDto?> Handle(GetUserByEmailOrUserName query, CancellationToken ct)
         {
             return _userRepository.GetUserByEmailOrUserName(query.Email, query.UserName);
         }

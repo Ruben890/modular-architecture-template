@@ -29,12 +29,15 @@ namespace Module.Auth.Application.Services
                 if (request == null)
                     return request.CustomResponse("Invalid request. Could not deserialize input.", HttpStatusCode.BadRequest);
 
-                if (string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.UserName))
-                    return request.CustomResponse("Please provide either Email or Username.", HttpStatusCode.BadRequest);
+                if ((string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.UserName)) ||
+                    (!string.IsNullOrWhiteSpace(request.Email) && !string.IsNullOrWhiteSpace(request.UserName)))
+                {
+                    return request.CustomResponse("Please provide either Email or Username, not both or neither.", HttpStatusCode.BadRequest);
+                }
 
                 if (!string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.UserName))
                 {
-                    var query = new GetUserByEmailOrUserNameHandler(request.Email, null!);
+                    var query = new GetUserByEmailOrUserName(request.Email, null!);
                     user = await _bus.InvokeAsync<User?>(query);
                     if (user != null)
                         return request.CustomResponse("No user found with the provided email.", HttpStatusCode.NotFound);
@@ -42,7 +45,7 @@ namespace Module.Auth.Application.Services
 
                 if (string.IsNullOrWhiteSpace(request.Email) && !string.IsNullOrWhiteSpace(request.UserName))
                 {
-                    var query = new GetUserByEmailOrUserNameHandler(null!, request.UserName);
+                    var query = new GetUserByEmailOrUserName(null!, request.UserName);
                     user = await _bus.InvokeAsync<User?>(query);
                     if (user != null)
                         return request.CustomResponse("No user found with the provided username.", HttpStatusCode.NotFound);

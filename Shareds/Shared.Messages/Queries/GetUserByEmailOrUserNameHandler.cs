@@ -1,4 +1,4 @@
 ﻿namespace Shared.Messages.Queries
 {
-    public record GetUserByEmailOrUserNameHandler(string Email, string UserName);
+    public record GetUserByEmailOrUserName(string Email, string UserName);
 }
