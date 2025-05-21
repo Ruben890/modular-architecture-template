@@ -1,4 +1,5 @@
 ﻿using Module.User.Domain.Interfaces.IRepository;
+using Shared.Core.Attributes;
 using Shared.Messages.Queries;
 using Wolverine.Attributes;
 using UserDto = Shared.DTO.Dtos.User;
@@ -7,7 +8,8 @@ using UserDto = Shared.DTO.Dtos.User;
 namespace Module.User.Application.Handlers.Queries
 {
     [WolverineHandler]
-    public class GetUserByEmailOrUserNameQueries
+    [ModuleHandler]
+    public class GetUserByEmailOrUserNameQueries 
     {
         private readonly IUserRepository _userRepository;
 
