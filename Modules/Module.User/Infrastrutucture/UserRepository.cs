@@ -2,6 +2,7 @@
 using Module.User.Domain.Interfaces.IRepository;
 using Shared.Core;
 using UserEntity = Module.User.Domain.Entity.User;
+using UserDto = Shared.DTO.Dtos.User;
 
 namespace Module.User.Infrastrutucture
 {
@@ -13,10 +14,18 @@ namespace Module.User.Infrastrutucture
             _context = context;
         }
 
-        public async Task<UserEntity?> GetUserByEmailOrUserName(string email, string userName)
+        public async Task<UserDto?> GetUserByEmailOrUserName(string email, string userName)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email || u.UserName == userName);
+                .Select(x => new UserDto
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    UserName = x.UserName,
+                    Name = x.Name,
+                    LastName = x.LastName,
+                    RoleName = x.Role.Name,
+                }).FirstOrDefaultAsync(u => u.Email == email || u.UserName == userName);
         }
 
         public void AddUser(UserEntity user) => Create(user);

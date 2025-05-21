@@ -1,5 +1,4 @@
-﻿using Marten;
-using Shared.Messages.Queries;
+﻿using Module.User.Domain.Interfaces.IRepository;
 using UserDto = Shared.DTO.Dtos.User;
 
 
@@ -7,17 +6,16 @@ namespace Module.User.Application.Handlers.Queries
 {
     public class GetUserByEmailOrUserNameHandler
     {
-        private readonly IDocumentSession _session;
+        private readonly IUserRepository _userRepository;
 
-        public GetUserByEmailOrUserNameHandler(IDocumentSession session)
+        public GetUserByEmailOrUserNameHandler(IUserRepository userRepository)
         {
-            _session = session;
+            _userRepository = userRepository;
         }
 
-        public Task<UserDto?> Handle(GetUserByEmailOrUserNameQuery query, CancellationToken ct)
+        public Task<UserDto?> Handle(Shared.Messages.Queries.GetUserByEmailOrUserNameHandler query, CancellationToken ct)
         {
-            return _session.Query<UserDto>()
-                .FirstOrDefaultAsync(x => x.Email == query.Email || x.UserName == query.UserName, ct);
+            return _userRepository.GetUserByEmailOrUserName(query.Email, query.UserName);
         }
     }
 }
