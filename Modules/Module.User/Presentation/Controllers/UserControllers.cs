@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Module.User.Domain.Interfaces.IRepository;
-using Shared.Core.Interfaces;
 
 namespace Module.User.Presentation.Controllers
 {
+    [ApiVersion("0", Deprecated = true)]
+    [ApiVersion("1")]
     [ApiController]
     [Route("api/Users")]
     internal class UserController : ControllerBase
