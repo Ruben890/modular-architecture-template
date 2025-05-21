@@ -1,6 +1,6 @@
 ﻿namespace Shared.DTO.Request.Dtos
 {
-    public class Requestlogin
+    public class RequestLogin
     {
 
         public string? Email { get; set; } = null;
