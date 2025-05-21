@@ -28,6 +28,7 @@ builder.Host.UseWolverine(opts =>
     opts.Policies.UseDurableInboxOnAllListeners();
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
+    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
 });
 
 builder.Services.ConfigureLoggerService();
