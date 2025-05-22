@@ -52,9 +52,9 @@ namespace Module.Auth.Application.Services
      
                 return request.CustomResponse("Login successful.",  HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return request.CustomResponse(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
     }
