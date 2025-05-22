@@ -14,7 +14,7 @@ namespace API.Extensions
         /// <summary>
         /// Incluye en Wolverine solo los assemblies que contienen handlers modulares válidos:
         /// - Clases que terminan en "Queries" o "Commands"
-        /// - Que tengan el atributo [ModuleHandler]
+        /// - Que tengan el atributo [WModuleHandler]
         /// - Que tengan un método público "Handle"
         /// 
         /// Utiliza paralelismo controlado para aprovechar varios núcleos sin saturar la memoria.
