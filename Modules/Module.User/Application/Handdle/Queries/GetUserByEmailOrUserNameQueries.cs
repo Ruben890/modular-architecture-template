@@ -8,7 +8,7 @@ using UserDto = Shared.DTO.Dtos.User;
 namespace Module.User.Application.Handlers.Queries
 {
     [WolverineHandler]
-    [ModuleHandler]
+    [WModuleHandler]
     public class GetUserByEmailOrUserNameQueries 
     {
         private readonly IUserRepository _userRepository;

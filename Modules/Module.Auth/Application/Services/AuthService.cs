@@ -1,4 +1,5 @@
 ﻿using Module.Auth.Domain.Interfaces;
+using Shared.Core.Extensions;
 using Shared.Core.Extesions;
 using Shared.DTO.Dtos;
 using Shared.DTO.Request.Dtos;
@@ -23,6 +24,7 @@ namespace Module.Auth.Application.Services
         {
             try
             {
+                var response = new ApiResponse();
                 var user = new User();
                 var request = JsonSerializer.Deserialize<RequestLogin>(jsonIn.ToString()!);
 
@@ -39,7 +41,7 @@ namespace Module.Auth.Application.Services
                 {
                     var query = new GetUserByEmailOrUserName(request.Email, null!);
                     user = await _bus.InvokeAsync<User?>(query);
-                    if (user != null)
+                    if (user == null)
                         return request.CustomResponse("No user found with the provided email.", HttpStatusCode.NotFound);
                 }
 
@@ -47,7 +49,7 @@ namespace Module.Auth.Application.Services
                 {
                     var query = new GetUserByEmailOrUserName(null!, request.UserName);
                     user = await _bus.InvokeAsync<User?>(query);
-                    if (user != null)
+                    if (user == null)
                         return request.CustomResponse("No user found with the provided username.", HttpStatusCode.NotFound);
                 }
 

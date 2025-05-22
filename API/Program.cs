@@ -29,7 +29,7 @@ builder.Host.UseWolverine(opts =>
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
     opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
-    opts.Discovery.IncludeAllModuleHandlers();
+    opts.Discovery.IncludeAllWolverineModuleHandlers();
 });
 
 builder.Services.ConfigureLoggerService();
