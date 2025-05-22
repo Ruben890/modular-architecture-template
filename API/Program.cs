@@ -4,6 +4,7 @@ using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.HttpOverrides;
 using Wolverine;
+using Wolverine.EntityFrameworkCore;
 using Wolverine.ErrorHandling;
 using Wolverine.Postgresql;
 
@@ -24,13 +25,14 @@ var connectionString = builder.Configuration.GetConnectionString("StringConnecti
 
 builder.Host.UseWolverine(opts =>
 {
-
     opts.PersistMessagesWithPostgresql(connectionString, "wolverine");
+    opts.Policies.AutoApplyTransactions();
     opts.Policies.UseDurableInboxOnAllListeners();
-    opts.OnException<TimeoutException>()
-        .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
+    opts.UseEntityFrameworkCoreTransactions();
     opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
     opts.Discovery.IncludeAllWolverineModuleHandlers();
+    opts.OnException<TimeoutException>()
+    .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
 });
 
 builder.Services.ConfigureLoggerService();
