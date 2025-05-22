@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Module.User.Domain.Entity;
 using Module.User.Domain.Interfaces.IRepository;
 using Shared.Core;
-using UserEntity = Module.User.Domain.Entity.User;
-using UserDto = Shared.DTO.Dtos.User;
-using System.Threading.Tasks;
+
+
 
 namespace Module.User.Infrastrutucture
 {
-    public class UserRepository :RepositoryBase<UserEntity, UserContext>, IUserRepository
+    public class UserRepository : RepositoryBase<UserEntity, UserContext>, IUserRepository
     {
         private readonly UserContext _context;
         public UserRepository(UserContext context) : base(context)
@@ -15,17 +15,17 @@ namespace Module.User.Infrastrutucture
             _context = context;
         }
 
-        public async Task<UserDto?> GetUserByEmailOrUserName(string email, string userName)
+        public async Task<UserEntity?> GetUserByEmailOrUserName(string email, string userName)
         {
             return await _context.Users
-                .Select(x => new UserDto
+                .Select(x => new UserEntity
                 {
                     Id = x.Id,
                     Email = x.Email,
                     UserName = x.UserName,
                     Name = x.Name,
                     LastName = x.LastName,
-                    RoleName = x.Role.Name,
+                    Role = x.Role
                 }).FirstOrDefaultAsync(u => u.Email == email || u.UserName == userName);
         }
 

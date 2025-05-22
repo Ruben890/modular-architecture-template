@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Module.User.Domain.Entity
 {
 
-    public class User
+    public class UserEntity
     {
         [Key]
         public Guid Id { get; set; }

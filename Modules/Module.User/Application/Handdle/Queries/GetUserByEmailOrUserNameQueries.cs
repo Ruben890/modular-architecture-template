@@ -1,4 +1,5 @@
-﻿using Module.User.Domain.Interfaces.IRepository;
+﻿using Mapster;
+using Module.User.Domain.Interfaces.IRepository;
 using Shared.Core.Attributes;
 using Shared.Messages.Queries;
 using Wolverine.Attributes;
@@ -18,9 +19,11 @@ namespace Module.User.Application.Handlers.Queries
             _userRepository = userRepository;
         }
 
-        public Task<UserDto?> Handle(GetUserByEmailOrUserName query, CancellationToken ct)
+        public async Task<UserDto?> Handle(GetUserByEmailOrUserName query, CancellationToken ct)
         {
-            return _userRepository.GetUserByEmailOrUserName(query.Email, query.UserName);
+            var userEntity = await _userRepository.GetUserByEmailOrUserName(query.Email, query.UserName);
+
+            return userEntity.Adapt<UserDto>();
         }
     }
 }

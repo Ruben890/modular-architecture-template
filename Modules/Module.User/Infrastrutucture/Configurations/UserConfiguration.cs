@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UserEntity = Module.User.Domain.Entity.User;
+using Module.User.Domain.Entity;
 namespace Module.User.Infrastrutucture.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
