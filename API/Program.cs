@@ -24,7 +24,8 @@ var connectionString = builder.Configuration.GetConnectionString("StringConnecti
 
 builder.Host.UseWolverine(opts =>
 {
-    opts.PersistMessagesWithPostgresql(connectionString);
+
+    opts.PersistMessagesWithPostgresql(connectionString, "wolverine");
     opts.Policies.UseDurableInboxOnAllListeners();
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());

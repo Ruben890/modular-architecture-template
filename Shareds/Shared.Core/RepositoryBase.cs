@@ -29,6 +29,5 @@ namespace Shared.Core
         public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);
         public void UpdateRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().UpdateRange(entities);
         public async Task CreateRange(IEnumerable<TEntity> entities) => await Context.Set<TEntity>().AddRangeAsync(entities);
-        public void InsertRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().AddRange(entities);
     }
 }
