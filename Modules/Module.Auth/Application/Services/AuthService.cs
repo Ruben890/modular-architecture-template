@@ -1,6 +1,5 @@
 ﻿using Module.Auth.Domain.Interfaces;
 using Shared.Core.Extensions;
-using Shared.Core.Extesions;
 using Shared.DTO.Dtos;
 using Shared.DTO.Request.Dtos;
 using Shared.DTO.Response;

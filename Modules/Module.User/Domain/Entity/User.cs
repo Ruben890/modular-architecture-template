@@ -30,7 +30,7 @@ namespace Module.User.Domain.Entity
         [AllowNull]
         public string? RefreshToken { get; set; } = null;
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         public int? RoleId { get; set; }
