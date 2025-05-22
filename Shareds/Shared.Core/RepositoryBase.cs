@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Shared.Core
 {
@@ -22,7 +23,7 @@ namespace Shared.Core
             trackChanges
                 ? Context.Set<TEntity>().Where(expression)
                 : Context.Set<TEntity>().Where(expression).AsNoTracking();
-        public void Create(TEntity entity) => Context.Set<TEntity>().Add(entity);
+        public async Task Create(TEntity entity) => await Context.Set<TEntity>().AddAsync(entity);
         public void Update(TEntity entity) => Context.Set<TEntity>().Update(entity);
         public void Delete(TEntity entity) => Context.Set<TEntity>().Remove(entity);
         public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);

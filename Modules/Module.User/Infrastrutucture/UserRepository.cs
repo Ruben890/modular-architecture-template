@@ -3,6 +3,7 @@ using Module.User.Domain.Interfaces.IRepository;
 using Shared.Core;
 using UserEntity = Module.User.Domain.Entity.User;
 using UserDto = Shared.DTO.Dtos.User;
+using System.Threading.Tasks;
 
 namespace Module.User.Infrastrutucture
 {
@@ -28,7 +29,7 @@ namespace Module.User.Infrastrutucture
                 }).FirstOrDefaultAsync(u => u.Email == email || u.UserName == userName);
         }
 
-        public void AddUser(UserEntity user) => Create(user);
+        public async Task AddUser(UserEntity user) => await Create(user);
         public void DeleteUser(UserEntity user) => Delete(user);
         public void UpdateUser(UserEntity user) => Update(user);
     }
