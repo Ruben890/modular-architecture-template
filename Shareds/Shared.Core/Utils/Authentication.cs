@@ -44,7 +44,7 @@ namespace Shared.Core.Utils
         /// <exception cref="InvalidOperationException">Se lanza si el valor de configuración es nulo o vacío.</exception>
         private static string GetConfigurationValue(IConfiguration configuration, string key)
         {
-            return configuration[key] ?? throw new InvalidOperationException($"El valor '{key}' en la configuración no puede ser nulo o vacío.");
+            return configuration[key] ?? throw new InvalidOperationException($"The value '{key}' in the configuration cannot be null or empty.");
         }
 
         /// <summary>
