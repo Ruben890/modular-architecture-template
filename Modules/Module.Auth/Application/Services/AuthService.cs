@@ -5,7 +5,6 @@ using Shared.DTO.Request.Dtos;
 using Shared.DTO.Response;
 using Shared.Messages.Queries;
 using System.Net;
-using System.Text.Json;
 using Wolverine;
 
 namespace Module.Auth.Application.Services
@@ -19,13 +18,11 @@ namespace Module.Auth.Application.Services
             _bus = bus;
         }
 
-        public async Task<ApiResponse> Login(object jsonIn)
+        public async Task<ApiResponse> Login(RequestLogin request)
         {
             try
             {
-                var response = new ApiResponse();
                 var user = new User();
-                var request = JsonSerializer.Deserialize<RequestLogin>(jsonIn.ToString()!);
 
                 if (request == null)
                     return request.CustomResponse("Invalid request. Could not deserialize input.", HttpStatusCode.BadRequest);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Module.Auth.Domain.Interfaces;
+using Shared.DTO.Request.Dtos;
 
 namespace Module.Auth.Presentation.Controllers
 {
@@ -17,9 +18,9 @@ namespace Module.Auth.Presentation.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] object jsonIn)
+        public async Task<IActionResult> Login([FromBody] RequestLogin request)
         {
-            var login = await _authService.Login(jsonIn);
+            var login = await _authService.Login(request);
             return new ObjectResult(login);
         }
     }
