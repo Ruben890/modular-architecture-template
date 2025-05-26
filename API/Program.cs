@@ -57,6 +57,32 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
 });
 
+app.Use(async (context, next) =>
+{
+    var headers = context.Response.Headers;
+
+    headers["X-Content-Type-Options"] = "nosniff";
+    headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+    headers["X-XSS-Protection"] = "0";
+    headers["X-Frame-Options"] = "DENY";
+
+    headers["Content-Security-Policy"] = string.Join("; ",
+        "default-src 'self'",
+        "script-src 'self'",
+        "style-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "object-src 'none'",
+        "frame-ancestors 'none'",
+        "base-uri 'none'",
+        "form-action 'self'"
+    );
+
+    headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=(), fullscreen=(), payment=(), usb=()";
+
+    await next();
+});
+
 app.UseAuthentication();
 
 app.UseAuthorization();
