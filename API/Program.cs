@@ -25,14 +25,19 @@ var connectionString = builder.Configuration.GetConnectionString("StringConnecti
 
 builder.Host.UseWolverine(opts =>
 {
-    opts.PersistMessagesWithPostgresql(connectionString, "wolverine");
+    opts.PersistMessagesWithPostgresql(connectionString, schemaName: "wolverine");
     opts.Policies.AutoApplyTransactions();
     opts.Policies.UseDurableInboxOnAllListeners();
-    opts.UseEntityFrameworkCoreTransactions();
-    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
+    opts.Policies.UseDurableOutboxOnAllSendingEndpoints();
     opts.Discovery.IncludeAllWolverineModuleHandlers();
+    opts.Discovery.IncludeAssembly(typeof(UpdateUserCommand).Assembly);
+
+    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
     opts.OnException<TimeoutException>()
-    .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
+        .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
+    opts.OnException<NpgsqlException>()
+    .RetryWithCooldown(500.Milliseconds(), 5.Seconds(), 30.Seconds());
+
 });
 
 builder.Services.ConfigureLoggerService();
