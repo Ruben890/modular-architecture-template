@@ -53,6 +53,21 @@ namespace API.Extensions
                      ValidAudience = config.GetRequiredSection("Jwt").GetRequiredSection("Audience").Value,
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
                  };
+                 
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = async ctx =>
+                    {
+                        if (ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken)
+                            && !string.IsNullOrEmpty(accessToken))
+                        {
+                            ctx.Token = accessToken;
+                        }
+                
+                        await Task.CompletedTask;
+                    },
+                };
+                 
              });
         }
 
