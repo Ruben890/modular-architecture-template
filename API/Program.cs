@@ -44,6 +44,7 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureAuthJWT(builder.Configuration);
 builder.Services.AddGlobalCookiePolicy(builder.Environment);
 builder.Services.ConfigureApiVersioning(builder.Configuration);
+TypeAdapterConfig.GlobalSettings.Default.IgnoreNullValues(true);
 builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
 builder.Services.RegisterModules(builder.Configuration);
