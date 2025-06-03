@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Module.User.Domain.Interfaces.IRepository;
 using Module.User.Domain.Interfaces.IServices;
 using Shared.Core.Extensions;
@@ -73,7 +74,6 @@ namespace Module.User.Application.Services
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = null;
             user.Password = null;
-            user.Company = await _bus.InvokeAsync<CompanyDTO>(new GetCompanyByUserId(getByUser.Id));
 
             return response.CustomResponse(null!, HttpStatusCode.OK, user);
 
