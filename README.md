@@ -1,73 +1,73 @@
 # Plantilla de Monolito Modular con CQRS, Wolverine y Versionado de API
 
-## Descripci髇 General
+## Descripci贸n General
 
-Este proyecto es una plantilla para construir aplicaciones .NET 8 bajo el enfoque de **monolito modular**. Cada m骴ulo es aut髇omo, con su propia infraestructura, l骻ica de aplicaci髇 y presentaci髇, pero todos conviven en el mismo proceso y base de c骴igo. La comunicaci髇 entre m骴ulos se realiza mediante CQRS y eventos usando Wolverine, lo que permite desacoplar la l骻ica y facilitar la escalabilidad futura.
+Este proyecto es una plantilla para construir aplicaciones .NET 8 bajo el enfoque de **monolito modular**. Cada m贸dulo es aut贸nomo, con su propia infraestructura, l贸gica de aplicaci贸n y presentaci贸n, pero todos conviven en el mismo proceso y base de c贸digo. La comunicaci贸n entre m贸dulos se realiza mediante CQRS y eventos usando Wolverine, lo que permite desacoplar la l贸gica y facilitar la escalabilidad futura.
 
 ---
 
 ## Arquitectura
 
-- **Monolito Modular:** Cada m骴ulo (por ejemplo, `Module.User`, `Module.Auth`) es un ensamblado independiente, pero todos se despliegan juntos en la misma aplicaci髇.
-- **CQRS + Event Sourcing:** Los m骴ulos se comunican mediante comandos, consultas y eventos usando Wolverine, desacoplando la l骻ica de negocio y la persistencia.
-- **Versionado de API:** Gestionado con `Asp.Versioning`, permitiendo m鷏tiples versiones y evoluci髇 controlada de los endpoints.
+- **Monolito Modular:** Cada m贸dulo (por ejemplo, `Module.User`, `Module.Auth`) es un ensamblado independiente, pero todos se despliegan juntos en la misma aplicaci贸n.
+- **CQRS + Event Sourcing:** Los m贸dulos se comunican mediante comandos, consultas y eventos usando Wolverine, desacoplando la l贸gica de negocio y la persistencia.
+- **Versionado de API:** Gestionado con `Asp.Versioning`, permitiendo m煤ltiples versiones y evoluci贸n controlada de los endpoints.
 - **Logging Centralizado:** Uso de `LoggerManager` para centralizar logs de debug, info, warning y error.
-- **Persistencia Resiliente:** Integraci髇 con PostgreSQL y pol韙icas de reintento para conexiones robustas.
+- **Persistencia Resiliente:** Integraci贸n con PostgreSQL y pol铆ticas de reintento para conexiones robustas.
 
 ---
 
-## Estructura de un M骴ulo
+## Estructura de un M贸dulo
 
-Cada m骴ulo debe seguir la siguiente estructura:
+Cada m贸dulo debe seguir la siguiente estructura:
 
 ---
 
-## Reglas para Crear un Nuevo M骴ulo
+## Reglas para Crear un Nuevo M贸dulo
 
 1. **Crear la carpeta `Module.[Nombre]`** bajo `Modules`.
-2. **Agregar un archivo `[Nombre]ModuleStartup.cs`** con un m閠odo `Add[Nombre]Module` para registrar servicios, contexto y mapeos.
-3. **Definir carpetas para Application, Domain, Infrastructure y Presentation** siguiendo el ejemplo de los m骴ulos existentes.
-4. **Registrar el m骴ulo** en `API/Extensions/ConfigurationModules.cs` llamando a `services.Add[Nombre]Module(config);`.
+2. **Agregar un archivo `[Nombre]ModuleStartup.cs`** con un m茅todo `Add[Nombre]Module` para registrar servicios, contexto y mapeos.
+3. **Definir carpetas para Application, Domain, Infrastructure y Presentation** siguiendo el ejemplo de los m贸dulos existentes.
+4. **Registrar el m贸dulo** en `API/Extensions/ConfigurationModules.cs` llamando a `services.Add[Nombre]Module(config);`.
 
 ---
 
 ## Reglas para Controladores
 
 - Los controladores deben estar en `Presentation/Controllers` y terminar con `Controller`.
-- Se detectan autom醫icamente si cumplen con el sufijo o tienen el atributo `[Controller]`.
-- Deben devolver respuestas usando el est醤dar de `ApiResponse` (ver secci髇 de Respuestas).
+- Se detectan autom谩ticamente si cumplen con el sufijo o tienen el atributo `[Controller]`.
+- Deben devolver respuestas usando el est谩ndar de `ApiResponse` (ver secci贸n de Respuestas).
 
 ---
 
-## Comunicaci髇 entre M骴ulos (CQRS + Wolverine)
+## Comunicaci贸n entre M贸dulos (CQRS + Wolverine)
 
 - **Queries y Commands:** 
   - Las clases deben terminar en `Queries` o `Commands`.
   - Deben tener el atributo `[WModuleHandler]`.
-  - Deben implementar un m閠odo p鷅lico `Handle`.
+  - Deben implementar un m茅todo p煤blico `Handle`.
 - **Eventos:** 
-  - Los eventos se publican y consumen usando Wolverine, permitiendo integraci髇 as韓crona entre m骴ulos.
-- **Descubrimiento Autom醫ico:** 
-  - El sistema escanea todos los ensamblados y registra autom醫icamente los handlers v醠idos (ver `WolverineDiscoveryExtensions.cs`).
+  - Los eventos se publican y consumen usando Wolverine, permitiendo integraci贸n as铆ncrona entre m贸dulos.
+- **Descubrimiento Autom谩tico:** 
+  - El sistema escanea todos los ensamblados y registra autom谩ticamente los handlers v谩lidos (ver `WolverineDiscoveryExtensions.cs`).
 
 ---
 
-## Configuraci髇 de Handlers, Queries y Commands
+## Configuraci贸n de Handlers, Queries y Commands
 
 - Para que un handler sea registrado:
   - Debe ser una clase concreta (no abstracta).
-  - Nombre debe terminar en `Queries` o `Commands`.
+  - Nombre debe terminar en `Query` o `Command`.
   - Decorado con `[WModuleHandler]`.
-  - Debe tener un m閠odo p鷅lico `Handle`.
+  - Debe tener un m茅todo p煤blico `Handle`.
 - Ejemplo:
 
 ---
 
-## Est醤dar de Respuesta
+## Est谩ndar de Respuesta
 
 - Todas las respuestas deben usar el objeto `ApiResponse`:
   - Incluye: `Message`, `StatusCode`, `Details` y opcionalmente `Pagination`.
-  - Utilizar la extensi髇 `CustomResponse` para construir respuestas uniformes.
+  - Utilizar la extensi贸n `CustomResponse` para construir respuestas uniformes.
 - Ejemplo:
 
 ---
@@ -79,46 +79,46 @@ Cada m骴ulo debe seguir la siguiente estructura:
   - Header: `X-version`
   - QueryString: `ApiVersion`
   - Segmento de URL
-- La versi髇 por defecto se define en la configuraci髇 (`API_Versioning:DEFAULT_VERSION`).
-- Las versiones se reportan autom醫icamente en las respuestas.
+- La versi贸n por defecto se define en la configuraci贸n (`API_Versioning:DEFAULT_VERSION`).
+- Las versiones se reportan autom谩ticamente en las respuestas.
 
 ---
 
 ## Logging
 
 - Usar `ILoggerManager` para registrar logs.
-- M閠odos disponibles: `LogDebug`, `LogInfo`, `LogWarn`, `LogError`.
-- Los mensajes se truncan a 500 caracteres para evitar saturaci髇 de logs.
+- M茅todos disponibles: `LogDebug`, `LogInfo`, `LogWarn`, `LogError`.
+- Los mensajes se truncan a 500 caracteres para evitar saturaci贸n de logs.
 
 ---
 
-## Persistencia y Conexi髇
+## Persistencia y Conexi贸n
 
-- Cada m骴ulo puede tener su propio `DbContext`.
-- Uso de PostgreSQL con pol韙icas de reintento para conexiones resilientes.
-- La cadena de conexi髇 se define en la configuraci髇 (`StringConnection`).
+- Cada m贸dulo puede tener su propio `DbContext`.
+- Uso de PostgreSQL con pol铆ticas de reintento para conexiones resilientes.
+- La cadena de conexi贸n se define en la configuraci贸n (`StringConnection`).
 
 ---
 
-## C髆o Usar la Plantilla
+## C贸mo Usar la Plantilla
 
 1. Clona el repositorio.
-2. Crea un nuevo m骴ulo siguiendo la estructura y reglas descritas.
-3. Registra el m骴ulo en `ConfigurationModules.cs`.
+2. Crea un nuevo m贸dulo siguiendo la estructura y reglas descritas.
+3. Registra el m贸dulo en `ConfigurationModules.cs`.
 4. Implementa tus comandos, queries y eventos usando Wolverine.
-5. Usa el est醤dar de respuesta y logging.
-6. Configura el versionado de API seg鷑 tus necesidades.
+5. Usa el est谩ndar de respuesta y logging.
+6. Configura el versionado de API seg煤n tus necesidades.
 
 ---
 
 ## Recomendaciones
 
-- Mant閚 cada m骴ulo lo m醩 independiente posible.
-- Usa eventos para integraci髇 entre m骴ulos.
+- Mant茅n cada m贸dulo lo m谩s independiente posible.
+- Usa eventos para integraci贸n entre m贸dulos.
 - Versiona tus endpoints para evitar breaking changes.
-- Centraliza la gesti髇 de logs y respuestas.
+- Centraliza la gesti贸n de logs y respuestas.
 
 ---
 
-> Para dudas t閏nicas, revisa los archivos de ejemplo y la documentaci髇 inline en el c骴igo.
+> Para dudas t茅cnicas, revisa los archivos de ejemplo y la documentaci贸n inline en el c贸digo.
 
