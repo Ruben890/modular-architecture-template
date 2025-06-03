@@ -11,10 +11,8 @@ namespace API.Extensions
     {
         private const string TextOutputTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {NewLine}{Exception}";
 
-
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
-            // Registro del logger con manejo apropiado de ciclo de vida
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
@@ -24,7 +22,6 @@ namespace API.Extensions
             services.AddSingleton<ILoggerManager, LoggerManager>(provider =>
                 new LoggerManager(provider.GetRequiredService<ILogger<LoggerManager>>()));
         }
-
 
         public static void ConfigureLogHost(this IHostBuilder host, IConfiguration configuration)
         {
@@ -37,8 +34,14 @@ namespace API.Extensions
                 config.MinimumLevel.Debug()
                     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                     .MinimumLevel.Override("System", LogEventLevel.Warning)
+                    .MinimumLevel.Override("Wolverine.Runtime", LogEventLevel.Warning)
+                    .MinimumLevel.Override("Wolverine.Persistence", LogEventLevel.Warning)
+                    .MinimumLevel.Override("Wolverine.Tracking", LogEventLevel.Warning)
                     .Enrich.WithProperty("Application", configuration["AppName"])
                     .Enrich.FromLogContext()
+                    .Filter.ByExcluding(logEvent =>
+                        logEvent.MessageTemplate.Text.Contains("IAgentCommand") ||
+                        logEvent.MessageTemplate.Text.Contains("DatabaseOperationBatch"))
                     .WriteTo.File(
                         path: Path.Combine(logPath, "application-.log"),
                         rollingInterval: RollingInterval.Day,
