@@ -49,8 +49,8 @@ namespace API.Extensions
                             return asm.GetTypes().Any(type =>
                                 type.IsClass &&
                                 !type.IsAbstract &&
-                                (type.Name.EndsWith("Queries", StringComparison.OrdinalIgnoreCase) ||
-                                 type.Name.EndsWith("Commands", StringComparison.OrdinalIgnoreCase)) &&
+                                (type.Name.EndsWith("Query", StringComparison.OrdinalIgnoreCase) ||
+                                 type.Name.EndsWith("Command", StringComparison.OrdinalIgnoreCase)) &&
                                 type.GetCustomAttribute<WModuleHandlerAttribute>() != null &&
                                 type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
                                     .Any(m => m.Name == "Handle"));
