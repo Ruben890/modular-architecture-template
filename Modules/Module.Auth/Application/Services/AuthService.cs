@@ -50,7 +50,7 @@ namespace Module.Auth.Application.Services
                         return request.CustomResponse("No user found with the provided email.", HttpStatusCode.NotFound);
                 }
 
-                if (string.IsNullOrWhiteSpace(request.EmailOrUserName) && !isEmail)
+                if (!string.IsNullOrWhiteSpace(request.EmailOrUserName) && !isEmail)
                 {
                     var query = new GetUserByEmailOrUserName(null!, request.EmailOrUserName);
                     user = await _bus.InvokeAsync<UserDto?>(query);
