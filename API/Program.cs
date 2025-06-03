@@ -3,6 +3,7 @@ using JasperFx.Core;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.HttpOverrides;
+using Npgsql;
 using Wolverine;
 using Wolverine.EntityFrameworkCore;
 using Wolverine.ErrorHandling;
@@ -30,8 +31,6 @@ builder.Host.UseWolverine(opts =>
     opts.Policies.UseDurableInboxOnAllListeners();
     opts.Policies.UseDurableOutboxOnAllSendingEndpoints();
     opts.Discovery.IncludeAllWolverineModuleHandlers();
-    opts.Discovery.IncludeAssembly(typeof(UpdateUserCommand).Assembly);
-
     opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
