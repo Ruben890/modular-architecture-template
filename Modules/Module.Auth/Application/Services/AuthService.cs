@@ -36,8 +36,7 @@ namespace Module.Auth.Application.Services
 
                 var isEmail = new EmailAddressAttribute().IsValid(request.EmailOrUserName);
 
-                if ((string.IsNullOrWhiteSpace(request.EmailOrUserName)) ||
-                    (!string.IsNullOrWhiteSpace(request.EmailOrUserName)))
+                if (string.IsNullOrWhiteSpace(request.EmailOrUserName))
                 {
                     return request.CustomResponse("Please provide either Email or Username, not both or neither.", HttpStatusCode.BadRequest);
                 }
