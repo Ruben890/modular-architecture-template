@@ -6,7 +6,7 @@ using Wolverine.Attributes;
 using UserDto = Shared.DTO.Dtos.User;
 
 
-namespace Module.User.Application.Handlers.Queries
+namespace Module.User.Application.Queries
 {
     [WolverineHandler]
     [WModuleHandler]

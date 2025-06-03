@@ -9,7 +9,7 @@ namespace Module.User.Infrastrutucture
         public UserContext(DbContextOptions<UserContext> options)
             : base(options) { }
 
-        public DbSet<Domain.Entity.User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

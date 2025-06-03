@@ -20,7 +20,7 @@ namespace Module.Auth.Presentation.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] RequestLogin request)
         {
-            var login = await _authService.Login(request);
+            var login = await _authService.Login(request, HttpContext);
             return new ObjectResult(login);
         }
     }

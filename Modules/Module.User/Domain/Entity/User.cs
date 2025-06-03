@@ -13,6 +13,10 @@ namespace Module.User.Domain.Entity
         [Required]
         public string? Name { get; set; }
 
+
+        [Required]
+        public string? Phone { get; set; }
+
         [AllowNull]
         public string? UserName { get; set; }
 
@@ -21,7 +25,7 @@ namespace Module.User.Domain.Entity
         [Required]
         public string? Email { get; set; }
 
-        [Required]
+        [AllowNull]
         public string? Password { get; set; }
 
         [AllowNull]
@@ -30,13 +34,16 @@ namespace Module.User.Domain.Entity
         [AllowNull]
         public string? RefreshToken { get; set; } = null;
 
+        [AllowNull]
+        public DateOnly? RefreshTokenExpiryTime { get; set; } = null;
+
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         public int? RoleId { get; set; }
 
         [ForeignKey(nameof(RoleId))]
-        public Role Role { get; set; } = null!;
+        public virtual Role? Role { get; set; } = null!;
 
     }
 
