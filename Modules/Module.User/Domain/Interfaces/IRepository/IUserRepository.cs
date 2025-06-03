@@ -8,6 +8,7 @@ namespace Module.User.Domain.Interfaces.IRepository
         public Task AddUser(UserEntity user);
         public void DeleteUser(UserEntity user);
         Task<UserEntity?> GetUserByEmailOrUserName(string email, string userName);
+        Task<UserEntity?> GetUserById(Guid UserId);
         public void UpdateUser(UserEntity user);
     }
 }

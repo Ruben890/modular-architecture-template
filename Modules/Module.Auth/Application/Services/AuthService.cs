@@ -10,6 +10,7 @@ using Shared.DTO.Response;
 using Shared.Messages.Commads;
 using Shared.Messages.Queries;
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using Wolverine;
 using UserDto = Shared.DTO.Dtos.User;
@@ -79,6 +80,74 @@ namespace Module.Auth.Application.Services
             catch (Exception ex)
             {
                 return request.CustomResponse(ex.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public async Task<ApiResponse> RefreshToken(HttpContext context)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                // Obtener los tokens desde las cookies
+                context.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+
+                if (string.IsNullOrWhiteSpace(accessToken))
+                    return response.CustomResponse("Access token or refresh token is empty", HttpStatusCode.Unauthorized);
+
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+
+                if (jsonToken == null)
+                    return response.CustomResponse("Invalid access token", HttpStatusCode.Unauthorized);
+
+                // Obtener el UserId del token
+                var userIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == "Id")?.Value;
+                if (string.IsNullOrWhiteSpace(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                    return response.CustomResponse("UserId not found in token", HttpStatusCode.BadRequest);
+
+                // Buscar usuario en la base de datos
+                var query = new GetUserById(userId);
+                var user = await _bus.InvokeAsync<UserDto?>(query);
+                if (user == null)
+                    return response.CustomResponse("User not found", HttpStatusCode.NotFound);
+
+                // Validar el refresh token y su expiración
+                if (user.RefreshToken != null && user.RefreshTokenExpiryTime < DateOnly.FromDateTime(DateTime.UtcNow))
+                    return response.CustomResponse("Invalid refresh token", HttpStatusCode.Unauthorized);
+
+                // Generar nuevo token
+                var token = Authentication.GenerateToken(new { user.Id, role = user.RoleName }, DateTime.UtcNow.AddDays(1));
+                if (token == null || string.IsNullOrWhiteSpace(token.RefreshToken))
+                    return response.CustomResponse("Error generating authentication token", HttpStatusCode.InternalServerError);
+
+                // Actualizar usuario con el nuevo refresh token
+                user.RefreshToken = token.RefreshToken;
+                user.RefreshTokenExpiryTime = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7));
+
+                var commands = new UpdateUser(user);
+                await _bus.InvokeAsync(commands);
+                ManageTokenCookies(token, context);
+
+                return response.CustomResponse("Token refreshed successfully", HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return response.CustomResponse($"Error during token refresh: {ex.Message}", HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public ApiResponse Logout(HttpContext context)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                // Remove the authentication cookies using the same configuration used to create them.
+                ManageTokenCookies(null, context, isLogout: true);
+                return response.CustomResponse("Logout successful.", HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return response.CustomResponse("An error occurred while trying to log out. Please try again.", HttpStatusCode.InternalServerError);
             }
         }
 

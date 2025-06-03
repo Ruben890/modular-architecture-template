@@ -7,7 +7,7 @@ namespace Module.Auth.Presentation.Controllers
     [ApiVersion("0", Deprecated = true)]
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/Auth")]
+    [Route("api/[controller]")]
     internal class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -18,10 +18,17 @@ namespace Module.Auth.Presentation.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] RequestLogin request)
-        {
-            var login = await _authService.Login(request, HttpContext);
-            return new ObjectResult(login);
-        }
+        public async Task<IActionResult> Login([FromBody] RequestLogin request) =>
+        new ObjectResult(await _authService.Login(request, HttpContext));
+
+
+        [HttpPost("Logout")]
+        public IActionResult Logout() =>
+         new ObjectResult(_authService.Logout(HttpContext));
+
+
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken() =>
+          new ObjectResult(await _authService.RefreshToken(HttpContext));
     }
 }

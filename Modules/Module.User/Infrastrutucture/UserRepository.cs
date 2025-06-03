@@ -18,6 +18,8 @@ namespace Module.User.Infrastrutucture
         public async Task<UserEntity?> GetUserByEmailOrUserName(string email, string userName)
         {
             return await _context.Users
+                .Where(u => u.Email == email || u.UserName == userName)
+                .AsNoTracking()
                 .Select(x => new UserEntity
                 {
                     Id = x.Id,
@@ -26,7 +28,23 @@ namespace Module.User.Infrastrutucture
                     Name = x.Name,
                     LastName = x.LastName,
                     Role = x.Role
-                }).FirstOrDefaultAsync(u => u.Email == email || u.UserName == userName);
+                }).FirstOrDefaultAsync();
+        }
+
+        public async Task<UserEntity?> GetUserById(Guid UserId)
+        {
+            return await _context.Users
+                .Where(x => x.Id == UserId)
+                .AsNoTracking()
+                .Select(x => new UserEntity
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    UserName = x.UserName,
+                    Name = x.Name,
+                    LastName = x.LastName,
+                    Role = x.Role
+                }).FirstOrDefaultAsync();
         }
 
         public async Task AddUser(UserEntity user) => await Create(user);

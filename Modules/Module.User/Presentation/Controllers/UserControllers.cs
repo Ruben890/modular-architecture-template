@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Module.User.Domain.Interfaces.IServices;
+using Shared.DTO.Request.QueryParameters;
 
 namespace Module.User.Presentation.Controllers
 {
     [ApiVersion("0", Deprecated = true)]
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/Users")]
+    [Route("api/[controller]")]
     internal class UserController : ControllerBase
     {
-     
-       
-        [HttpGet]
-        public IActionResult GetUsers()
+        private readonly IUserServices _userServices;
+        public UserController(IUserServices userServices)
         {
-      
-            return NotFound("no hay ususarios ");
-
+            _userServices = userServices;
         }
+
+        [Authorize]
+        [HttpGet("GetByUser")]
+        public async Task<IActionResult> GetByUser([FromQuery] GenericParameters parameters) =>
+         new ObjectResult(await _userServices.GetByUser(parameters, HttpContext));
     }
 }
