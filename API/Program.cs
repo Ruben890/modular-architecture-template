@@ -24,6 +24,7 @@ builder.Configuration
 var connectionString = builder.Configuration.GetConnectionString("StringConnection")
                        ?? throw new NullReferenceException("The connection string 'StringConnection' was not found.");
 
+
 builder.Host.UseWolverine(opts =>
 {
     opts.PersistMessagesWithPostgresql(connectionString, schemaName: "wolverine");
@@ -31,12 +32,10 @@ builder.Host.UseWolverine(opts =>
     opts.Policies.UseDurableInboxOnAllListeners();
     opts.Policies.UseDurableOutboxOnAllSendingEndpoints();
     opts.Discovery.IncludeAllWolverineModuleHandlers();
-    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
     opts.OnException<TimeoutException>()
         .RetryWithCooldown(100.Milliseconds(), 1.Seconds(), 5.Seconds());
     opts.OnException<NpgsqlException>()
-    .RetryWithCooldown(500.Milliseconds(), 5.Seconds(), 30.Seconds());
-
+        .RetryWithCooldown(500.Milliseconds(), 5.Seconds(), 30.Seconds());
 });
 
 builder.Services.ConfigureLoggerService();
