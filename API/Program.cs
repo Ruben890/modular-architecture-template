@@ -3,9 +3,11 @@ using JasperFx.Core;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.FileProviders;
 using Npgsql;
+using Serilog;
+using System.Runtime.InteropServices;
 using Wolverine;
-using Wolverine.EntityFrameworkCore;
 using Wolverine.ErrorHandling;
 using Wolverine.Postgresql;
 
@@ -87,6 +89,42 @@ app.Use(async (context, next) =>
     await next();
 });
 
+var webRootPath = app.Environment.WebRootPath ?? Path.Combine(AppContext.BaseDirectory, "wwwroot");
+
+if (!Directory.Exists(webRootPath))
+{
+    Directory.CreateDirectory(webRootPath);
+}
+
+if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(AppContext.BaseDirectory, "wwwroot")),
+        RequestPath = "/static",
+        OnPrepareResponse = ctx =>
+        {
+            // Configuración de caché para archivos estáticos
+            const int durationInSeconds = 60 * 60 * 24 * 7; // 7 días
+            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={durationInSeconds}");
+
+            // Bloquear acceso a la carpeta Templates
+            if (ctx.File.PhysicalPath!.Contains(Path.Combine("wwwroot", "Templates")))
+            {
+                ctx.Context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                ctx.Context.Response.ContentLength = 0;
+                ctx.Context.Response.Body = Stream.Null;
+            }
+        }
+    });
+
+}
+else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+{
+    app.UseStaticFiles();
+}
+
+app.UseSerilogRequestLogging();
 app.UseAuthentication();
 
 app.UseAuthorization();
