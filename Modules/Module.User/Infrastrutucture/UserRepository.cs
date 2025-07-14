@@ -2,6 +2,7 @@
 using Module.User.Domain.Entity;
 using Module.User.Domain.Interfaces.IRepository;
 using Shared.Core;
+using Shared.Core.Interfaces;
 
 
 
@@ -10,7 +11,7 @@ namespace Module.User.Infrastrutucture
     public class UserRepository : RepositoryBase<UserEntity, UserContext>, IUserRepository
     {
         private readonly UserContext _context;
-        public UserRepository(UserContext context) : base(context)
+        public UserRepository(UserContext context, IUnitOfWork unitOfWork) : base(context, unitOfWork)
         {
             _context = context;
         }

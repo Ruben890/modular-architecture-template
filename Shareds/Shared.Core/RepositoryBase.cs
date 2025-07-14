@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Core.Interfaces;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Shared.Core
 {
@@ -9,10 +9,12 @@ namespace Shared.Core
         where TContext : DbContext
     {
         protected readonly TContext Context;
+        protected readonly IUnitOfWork UnitOfWork;
 
-        public RepositoryBase(TContext context)
+        public RepositoryBase(TContext context, IUnitOfWork unitOfWork)
         {
             Context = context;
+            UnitOfWork = unitOfWork;
         }
 
         public IQueryable<TEntity> GetAll(bool trackChanges) =>
@@ -29,5 +31,12 @@ namespace Shared.Core
         public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);
         public void UpdateRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().UpdateRange(entities);
         public async Task CreateRange(IEnumerable<TEntity> entities) => await Context.Set<TEntity>().AddRangeAsync(entities);
+
+        public Task BeginTransactionAsync() => UnitOfWork.BeginAsync();
+
+        public Task CommitTransactionAsync() => UnitOfWork.CommitAsync();
+
+        public Task RollbackTransactionAsync() => UnitOfWork.RollbackAsync();
+        public Task SaveChangesAsync() => UnitOfWork.SaveAsync();
     }
 }
