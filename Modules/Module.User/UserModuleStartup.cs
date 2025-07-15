@@ -8,7 +8,9 @@ using Module.User.Domain.Interfaces.IRepository;
 using Module.User.Domain.Interfaces.IServices;
 using Module.User.Infrastrutucture;
 using Module.User.Presentation.Mappers;
+using Shared.Core;
 using Shared.Core.DatabaseRetryPolicies.PosgretSQL;
+using Shared.Core.Interfaces;
 
 namespace Module.User
 {
@@ -30,7 +32,7 @@ namespace Module.User
             });
 
             TypeAdapterConfig.GlobalSettings.RegisterUserMappings();
-
+            services.AddScoped<IUnitOfWork, UnitOfWork<UserContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserServices, UserServices>();
         }
